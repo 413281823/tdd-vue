@@ -4,12 +4,20 @@ import { createRenderer } from "./renderer";
 export const nodeOptions = {
   querySelector,
   insert,
+  setElementText,
+  setAttribute
 };
 function querySelector(el) {
   return document.querySelector(el);
 }
 function insert(el, node) {
   el.appendChild(node)
+}
+function setElementText(el, text) {
+    el.textContent = text
+}
+function setAttribute(el,key,value){
+    el.setAttribute(key,value)
 }
 export default function createApp(options) {
   const renderer = createRenderer(nodeOptions);

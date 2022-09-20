@@ -1,7 +1,9 @@
 // 创建渲染器 平台的元素操作
 export function createRenderer({
     querySelector,
-    insert
+    insert,
+    setElementText,
+    setAttribute
 }) {
   const render = (options, el) => {
     // 各平台的操作
@@ -28,7 +30,21 @@ export function createRenderer({
     });
 
     const node = render.call(proxy);
-    insert(el,node);
+    
+    if (typeof node === 'string') {
+        setElementText(el,node)
+    } else if ( node instanceof Element){
+        insert(el,node);
+    } else if (typeof node === 'object') {
+        if (node.props) {
+            for (let key in node.props) {
+                setAttribute(el,key,node.props[key])
+            }
+        }
+       
+    }
+    
+    
     // const exposed = instance.exposed || (instance.exposed = {})
     let exposed = {};
     if (options.exposed && options.exposed.length) {

@@ -31,4 +31,40 @@ describe("renderer", () => {
       }).mount(div);
     expect(div.childNodes[0].innerText).toBe("rourou");
   });
+  test("添加文本元素", () => {
+    const div = document.createElement("div");
+    const renderer = createRenderer(nodeOptions);
+    const app = renderer.createApp({
+        setup() {
+          return {
+            title: "liang",
+          };
+        },
+        render() {
+        
+          return this.title;
+        },
+      }).mount(div);
+    expect(div.textContent).toBe("liang");
+  });
+  test("添加元素属性", () => {
+    const div = document.createElement("div");
+    const renderer = createRenderer(nodeOptions);
+    const app = renderer.createApp({
+        setup() {
+          return {
+            title: "liang",
+          };
+        },
+        render() {
+            
+          return {
+            props:{
+                id:'rourou'
+            }
+          };
+        },
+      }).mount(div);
+    expect(div.id).toBe('rourou');
+  });
 });
