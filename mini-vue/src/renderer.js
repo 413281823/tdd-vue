@@ -30,9 +30,10 @@ export function createRenderer({
     });
 
     const node = render.call(proxy);
-    
+    // 字符串处理
     if (typeof node === 'string') {
         setElementText(el,node)
+        // document元素处理
     } else if ( node instanceof Element){
         insert(el,node);
     } else if (typeof node === 'object') {
@@ -61,6 +62,7 @@ export function createRenderer({
 
     return exposed;
   };
+  // createAppApi工厂函数返回createApp
   const createApp = createAppAPI(render);
   return {
     render,
