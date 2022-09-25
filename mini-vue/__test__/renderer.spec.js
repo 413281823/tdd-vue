@@ -67,4 +67,26 @@ describe("renderer", () => {
       }).mount(div);
     expect(div.id).toBe('rourou');
   });
+  it('should effect update', () => {
+    const div = document.createElement("div");
+    const renderer = createRenderer(nodeOptions);
+    const app = renderer.createApp({
+        data(){
+          return {
+            title: "rourou",
+          };
+        },
+        render() {
+          const el = document.createTextNode(this.title)
+          console.log(typeof el)
+          return el;
+        },
+      }).mount(div);
+      console.log(div.innerHTML)
+    expect(div.innerHTML).toBe("rourou");
+    app.title = 'reactive'
+    expect(app.title).toBe('reactive')
+    expect(div.innerHTML).toBe("reactive");
+   
+  });
 });

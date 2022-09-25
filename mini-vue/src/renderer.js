@@ -1,4 +1,5 @@
 import { reactive } from "./reactive";
+import { effect } from "./effect";
 // 创建渲染器 平台的元素操作
 export function createRenderer({
     querySelector,
@@ -30,7 +31,9 @@ export function createRenderer({
       },
       set(target,key,value){
         if (target.setupState && target.setupState.hasOwnProperty(key)) {
+         
              target.setupState[key] = value;
+            
           } else if (target.data && target.data.hasOwnProperty(key)) {
              target.data[key] = value;
           }
@@ -39,8 +42,9 @@ export function createRenderer({
     });
 
    
-    update()
+    
     function update(){
+      el.innerHTML = ""
         const node = render.call(proxy);
         // 字符串处理
         if (typeof node === 'string') {
@@ -53,11 +57,13 @@ export function createRenderer({
                 for (let key in node.props) {
                     setAttribute(el,key,node.props[key])
                 }
+            } else {
+              insert(el,node);
             }
            
         }
     }
-  
+    effect(update)
     // const exposed = instance.exposed || (instance.exposed = {})
     let exposed = {};
     if (options.exposed && options.exposed.length) {

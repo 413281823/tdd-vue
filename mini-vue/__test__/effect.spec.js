@@ -22,13 +22,14 @@ describe('createApp should work', () => {
             num2:2
         }
         const react = reactive(obj)
-        let dummy
+        let dummy1,dummy2
         effect(() => {
-            dummy = react.num1 + react.num2
+            dummy1 = react.num1
         })
-        expect(dummy).toBe(3)
-        react.num1 = 3
-        react.num2 = 3
-        expect(dummy).toBe(6)
+        effect(() => {
+            dummy2 = react.num2
+        })
+        expect(dummy1).toBe(1)
+        expect(dummy2).toBe(2)
     });
 });
